@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FB09D69A-56B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E27B2946-357F-4328-B567-28F20723DD6E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translaterr.Transman.Data", "src\Translaterr.Transman.Data\Translaterr.Transman.Data.csproj", "{3269DE25-6DB4-49A5-A16E-E1940195A8AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,22 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD} = {FB09D69A-56B0-4943-93A9-920B00BA2615}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD}.Debug|x64.Build.0 = Debug|Any CPU
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD}.Debug|x86.Build.0 = Debug|Any CPU
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD}.Release|x64.ActiveCfg = Release|Any CPU
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD}.Release|x64.Build.0 = Release|Any CPU
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD}.Release|x86.ActiveCfg = Release|Any CPU
+		{3269DE25-6DB4-49A5-A16E-E1940195A8AD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
