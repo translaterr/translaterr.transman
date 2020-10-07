@@ -1,7 +1,8 @@
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Translaterr.Transman.Data.Entities
 {
+    [Table("ApplicationsLanguages")]
     public class ApplicationLanguageEntity
     {
         public int ApplicationId { get; set; }
