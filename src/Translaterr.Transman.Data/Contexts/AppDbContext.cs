@@ -31,6 +31,7 @@ namespace Translaterr.Transman.Data.Contexts
             modelBuilder.Entity<ApplicationEntity>()
                 .HasMany(a => a.Translations)
                 .WithOne(t => t.Application)
+                .HasForeignKey(t => t.ApplicationId)
                 .OnDelete(DeleteBehavior.Cascade);
             
             modelBuilder.Entity<ApplicationEntity>()
@@ -55,7 +56,12 @@ namespace Translaterr.Transman.Data.Contexts
                 .HasMany(l => l.Translations)
                 .WithOne(t => t.Language)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
+            modelBuilder.Entity<TranslationEntity>()
+                .HasIndex(t => new {t.ApplicationId, t.LanguageId, t.EnvironmentId, t.Key})
+                .IsUnique();
+            modelBuilder.Entity<TranslationEntity>()
+                .HasIndex(t => new {t.PublicId});
         }
     }
 }
