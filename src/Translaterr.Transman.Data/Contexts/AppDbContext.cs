@@ -20,6 +20,14 @@ namespace Translaterr.Transman.Data.Contexts
                 .WithOne(a => a.Tenant)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<TenantEntity>()
+                .HasIndex(t => new {t.PublicId})
+                .IsUnique();
+
+            modelBuilder.Entity<TenantEntity>()
+                .HasIndex(t => new {t.Name})
+                .IsUnique();
+
             modelBuilder.Entity<ApplicationEntity>()
                 .HasMany(a => a.Translations)
                 .WithOne(t => t.Application)

@@ -19,8 +19,6 @@ namespace Translaterr.Transman.Data.Entities
         [Required]
         public string Name { get; set; }
         
-        public LanguageEntity FallbackLanguage { get; set; }
-        
         public LanguageEntity DefaultLanguage { get; set; }
         public ICollection<ApplicationLanguageEntity> ApplicationLanguages { get; set; }
         public ICollection<TranslationEntity> Translations { get; set; }
