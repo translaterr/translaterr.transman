@@ -1,12 +1,22 @@
 using System;
-using Translaterr.Transman.Abstractions.Types;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Translaterr.Transman.Domain.Types
 {
-    public class Tenant : ITenant
+    [Table("Tenants")]
+    public class Tenant
     {
+        [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
+        
+        [Required]
         public Guid PublicId { get; set; }
+        
+        [Required]
+        public string Name { get; set; }
+        
+        public ICollection<Application> Applications { get; set; } = new List<Application>();
     }
 }

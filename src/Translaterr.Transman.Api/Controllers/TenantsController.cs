@@ -1,89 +1,84 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Translaterr.Transman.Abstractions.ServiceResults.Tenants;
-using Translaterr.Transman.Abstractions.Services;
 using Translaterr.Transman.Api.DTOs.Tenants;
+using Translaterr.Transman.Api.Models;
+using Translaterr.Transman.Domain.Data;
+using Translaterr.Transman.Domain.Types;
 
 namespace Translaterr.Transman.Api.Controllers
 {
-    [Microsoft.AspNetCore.Components.Route("api/tenants")]
+    [Route("api/tenants")]
     public class TenantsController : BaseController
     {
         private readonly ILogger<TenantsController> _logger;
-        private readonly ITenantsService _tenantsService;
+        private readonly AppDbContext _appDbContext;
         
-        public TenantsController(ILogger<TenantsController> logger, ITenantsService tenantsService)
+        public TenantsController(ILogger<TenantsController> logger, AppDbContext appDbContext)
         {
             _logger = logger;
-            _tenantsService = tenantsService;
+            _appDbContext = appDbContext;
         }
 
         [HttpGet]
-        public async Task<ActionResult<TenantsIndexResultDto>> Index(CancellationToken cancellationToken)
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var tenantsResult = await _tenantsService.GetTenants(cancellationToken);
+            var tenants = await _appDbContext.Tenants.ToListAsync(cancellationToken);
 
-            if (tenantsResult.Type != TenantResults.Success)
-            {
-                _logger.LogError("Unable to retrieve all tenants");
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-
-            return Ok(new TenantsIndexResultDto(tenantsResult.Data));
+            return Ok(tenants.Select(tenant => new TenantModel(tenant)).ToList());
         }
 
         [HttpPost]
-        public async Task<ActionResult<TenantsCreateResultDto>> Create(TenantsCreateRequestDto request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(TenantsCreateRequest request, CancellationToken cancellationToken)
         {
-            var tenantsCreationResult = await _tenantsService.CreateTenant(request.Name, cancellationToken);
-
-            if (tenantsCreationResult.Type != TenantResults.Success)
+            var tenant = new Tenant
             {
-                _logger.LogError("Unable to create new tenant");
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+                Name = request.Name,
+                PublicId = Guid.NewGuid()
+            };
 
-            return Ok(new TenantsCreateResultDto(tenantsCreationResult.Data));
+            _appDbContext.Tenants.Add(tenant);
+            await _appDbContext.SaveChangesAsync(cancellationToken);
+
+            return Ok(new TenantModel(tenant));
         }
 
         [HttpPatch("{publicId}")]
-        public async Task<ActionResult> Update(Guid publicId, TenantsUpdateRequestDto request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update(Guid publicId, TenantsUpdateRequest request, CancellationToken cancellationToken)
         {
-            var tenantsUpdateResult = await _tenantsService.RenameTenant(publicId, request.Name, cancellationToken);
+            var tenant = await _appDbContext
+                .Tenants
+                .FirstOrDefaultAsync(t => t.PublicId == publicId, cancellationToken);
 
-            if (tenantsUpdateResult.Type == TenantResults.NoTenantFound)
+            if (tenant == null)
             {
                 return NotFound();
             }
 
-            if (tenantsUpdateResult.Type != TenantResults.Success)
-            {
-                _logger.LogError("Unable to update tenant with {publicId}", publicId.ToString());
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            tenant.Name = request.Name;
+            await _appDbContext.SaveChangesAsync(cancellationToken);
 
             return NoContent();
         }
 
         [HttpDelete("{publicId}")]
-        public async Task<ActionResult> Delete(Guid publicId, CancellationToken cancellationToken)
+        public async Task<IActionResult> Delete(Guid publicId, CancellationToken cancellationToken)
         {
-            var tenantsDeleteResult = await _tenantsService.DeleteTenant(publicId, cancellationToken);
+            var tenant = await _appDbContext
+                .Tenants
+                .FirstOrDefaultAsync(t => t.PublicId == publicId, cancellationToken);
 
-            if (tenantsDeleteResult.Type == TenantResults.NoTenantFound)
+            if (tenant == null)
             {
                 return NotFound();
             }
 
-            if (tenantsDeleteResult.Type != TenantResults.Success)
-            {
-                _logger.LogError("Unable to delete tenant with {publicId}", publicId.ToString());
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            _appDbContext.Tenants.Remove(tenant);
+            await _appDbContext.SaveChangesAsync(cancellationToken);
 
             return Ok();
         }

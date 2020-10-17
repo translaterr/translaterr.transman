@@ -4,7 +4,7 @@ using Translaterr.Transman.Domain.Types;
 
 namespace Translaterr.Transman.Api.Models
 {
-    public class TenantModel
+    public class ApplicationModel
     {
         [JsonPropertyName("publicId")]
         public Guid PublicId { get; set; }
@@ -12,10 +12,10 @@ namespace Translaterr.Transman.Api.Models
         [JsonPropertyName("name")]
         public string Name { get; set; }
         
-        public TenantModel(Tenant tenant)
+        public ApplicationModel(Application application)
         {
-            PublicId = tenant.PublicId;
-            Name = tenant.Name;
+            PublicId = application.PublicId;
+            Name = application.Name;
         }
     }
 }
