@@ -21,7 +21,7 @@ namespace Translaterr.Transman.Domain.Types
         [Required]
         public string Name { get; set; }
         
-        public ICollection<ApplicationLanguage> ApplicationLanguages { get; set; }
+        public string FallbackLanguage { get; set; }
         public ICollection<Translation> Translations { get; set; }
         public ICollection<Environment> Environments { get; set; }
     }

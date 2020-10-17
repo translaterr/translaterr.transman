@@ -22,6 +22,7 @@ namespace Translaterr.Transman.Api.Controllers
             _logger.LogDebug("Retrieving a all supported languages");
             return Ok(CultureInfo
                 .GetCultures(CultureTypes.AllCultures)
+                .Where(culture => culture.Name != string.Empty)
                 .Select(culture => new LanguageModel(culture))
                 .ToList()
             );

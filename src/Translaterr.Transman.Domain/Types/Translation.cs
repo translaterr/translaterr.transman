@@ -18,14 +18,12 @@ namespace Translaterr.Transman.Domain.Types
         public Application Application { get; set; }
         
         [Required]
-        public int LanguageId { get; set; }
-        public Language Language {get; set; }
+        public string LanguageCode {get; set; }
         
         public int EnvironmentId { get; set; }
         public Environment Environment { get; set; }
         
         [Required]
-        [Column(TypeName = "VARCHAR")]
         [MaxLength(255)]
         public string Key { get; set; }
         
