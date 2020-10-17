@@ -8,5 +8,10 @@ services:
       - 1433:1433
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=translaterr
+      - SA_PASSWORD=Tr4nsl4t3rr
       - MSSQL_PID=Express
+
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
