@@ -1,15 +1,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Translaterr.Transman.Api.Controllers;
 using Translaterr.Transman.Api.Models;
 using Xunit;
 
-namespace Translaterr.Transman.Api.Tests.Controllers.LanguageController
+namespace Translaterr.Transman.Api.Tests.Controllers.LanguagesControllerTests
 {
-    public class LanguageControllerIndexTests : BaseLanguageControllerTests
+    public class LanguagesControllerIndexTests : BaseLanguagesControllerTests
     {
+        public LanguagesControllerIndexTests() : base("LanguageControllerIndexTests") { }
+        
         [Fact]
-        public async Task ACall_ShouldReturnAListOfLanguages()
+        public void ACall_ShouldReturnAListOfLanguages()
         {
             // Arrange
             

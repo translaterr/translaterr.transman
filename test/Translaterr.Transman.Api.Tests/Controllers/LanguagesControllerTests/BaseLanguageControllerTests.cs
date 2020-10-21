@@ -2,15 +2,15 @@ using FakeItEasy;
 using Microsoft.Extensions.Logging;
 using Translaterr.Transman.Api.Controllers;
 
-namespace Translaterr.Transman.Api.Tests.Controllers.LanguageController
+namespace Translaterr.Transman.Api.Tests.Controllers.LanguagesControllerTests
 {
-    public abstract class BaseLanguageControllerTests : BaseControllerTests
+    public abstract class BaseLanguagesControllerTests : BaseControllerTests
     {
         protected LanguagesController LanguagesController;
 
         protected ILogger<LanguagesController> Logger;
 
-        public BaseLanguageControllerTests()
+        public BaseLanguagesControllerTests(string testsName) : base(testsName)
         {
             Logger = A.Fake<ILogger<LanguagesController>>();
             
