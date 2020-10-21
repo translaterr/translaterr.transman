@@ -1,7 +1,7 @@
-using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using Translaterr.Transman.Api.Validators;
+using Translaterr.Transman.Api.DTOs.Translations.Support;
 
 namespace Translaterr.Transman.Api.DTOs.Translations
 {
@@ -13,16 +13,8 @@ namespace Translaterr.Transman.Api.DTOs.Translations
         [MinLength(1)]
         public string Key { get; set; }
         
-        [JsonPropertyName("environmentId")]
-        public Guid EnvironmentId { get; set; }
-        
-        [JsonPropertyName("languageCode")]
+        [JsonPropertyName("values")]
         [Required]
-        [LanguageCode]
-        public string LanguageCode { get; set; }
-        
-        [JsonPropertyName("value")]
-        [Required]
-        public string Value { get; set; }
+        public IList<TranslationValueDto> Values { get; set; }
     }
 }

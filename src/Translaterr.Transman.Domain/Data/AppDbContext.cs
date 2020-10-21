@@ -9,8 +9,8 @@ namespace Translaterr.Transman.Domain.Data
         
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<Application> Applications { get; set; }
-        public DbSet<Environment> Environments { get; set; }
-        public DbSet<Translation> Translations { get; set; }
+        public DbSet<TranslationKey> TranslationKeys { get; set; }
+        public DbSet<TranslationValue> TranslationValues { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,7 @@ namespace Translaterr.Transman.Domain.Data
                 .IsUnique();
 
             modelBuilder.Entity<Application>()
-                .HasMany(a => a.Translations)
+                .HasMany(a => a.TranslationKeys)
                 .WithOne(t => t.Application)
                 .HasForeignKey(t => t.ApplicationId)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -37,14 +37,17 @@ namespace Translaterr.Transman.Domain.Data
                 .HasIndex(a => new {a.Name, a.TenantId})
                 .IsUnique();
 
-            modelBuilder.Entity<Translation>()
-                .HasIndex(t => new {t.ApplicationId, t.LanguageCode})
+            modelBuilder.Entity<TranslationKey>()
+                .HasIndex(t => new {t.ApplicationId, t.Key})
                 .IsUnique();
-            modelBuilder.Entity<Translation>()
-                .HasIndex(t => new {t.ApplicationId, t.LanguageCode, t.EnvironmentId, t.Key})
-                .IsUnique();
-            modelBuilder.Entity<Translation>()
+            modelBuilder.Entity<TranslationKey>()
                 .HasIndex(t => new {t.PublicId});
+
+            modelBuilder.Entity<TranslationKey>()
+                .HasMany(tk => tk.TranslationValues)
+                .WithOne(tv => tv.TranslationKey)
+                .HasForeignKey(tv => tv.TranslationKeyId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

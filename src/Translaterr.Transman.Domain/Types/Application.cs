@@ -22,7 +22,6 @@ namespace Translaterr.Transman.Domain.Types
         public string Name { get; set; }
         
         public string FallbackLanguage { get; set; }
-        public ICollection<Translation> Translations { get; set; }
-        public ICollection<Environment> Environments { get; set; }
+        public ICollection<TranslationKey> TranslationKeys { get; set; }
     }
 }

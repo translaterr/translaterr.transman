@@ -12,7 +12,7 @@ using Translaterr.Transman.Domain.Types;
 
 namespace Translaterr.Transman.Api.Controllers
 {
-    [Route("api/tenants/{tenantId}/applications/{applicationId}/translations")]
+    [Route("api/applications/{applicationId}/translations")]
     public class TranslationsController : BaseController
     {
         private readonly ILogger<TranslationsController> _logger;
@@ -25,78 +25,59 @@ namespace Translaterr.Transman.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(Guid tenantId, Guid applicationId, CancellationToken cancellationToken)
+        public async Task<IActionResult> Index(Guid applicationId, CancellationToken cancellationToken)
         {
-            var tenant = await _appDbContext
-                .Tenants
-                .Include(t => t.Applications)
-                .FirstOrDefaultAsync(t => t.PublicId == tenantId, cancellationToken);
-
-            if (tenant == null)
-            {
-                _logger.LogDebug("Unable to find any tenant by {publicId}", tenantId.ToString());
-                return NotFound();
-            }
-
-            var application = tenant.Applications.FirstOrDefault(a => a.PublicId == applicationId);
+            var application = await _appDbContext
+                .Applications
+                .Include(a => a.TranslationKeys)
+                .ThenInclude(tk => tk.TranslationValues)
+                .FirstOrDefaultAsync(a => a.PublicId == applicationId, cancellationToken);
 
             if (application == null)
             {
                 _logger.LogDebug(
-                    "Unable to find any application by {applicationPublicId} for {tenantId}", 
-                    applicationId.ToString(), 
-                    tenant.Id.ToString()
+                    "Unable to find any application by {applicationPublicId}", 
+                    applicationId.ToString()
                 );
                 return NotFound();
             }
 
-            var translations = await _appDbContext
-                .Translations
-                .Include(t => t.Environment)
-                .Where(t => t.ApplicationId == application.Id)
-                .ToListAsync(cancellationToken);
-
-            return Ok(translations.Select(translation => new TranslationModel(translation)).ToList());
+            return Ok(application.TranslationKeys.Select(translation => new TranslationKeyModel(translation)).ToList());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Guid tenantId, Guid applicationId, TranslationsCreateRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(Guid applicationId, TranslationsCreateRequest request, CancellationToken cancellationToken)
         {
-            var tenant = await _appDbContext
-                .Tenants
-                .Include(t => t.Applications)
-                .FirstOrDefaultAsync(t => t.PublicId == tenantId, cancellationToken);
-
-            if (tenant == null)
-            {
-                _logger.LogDebug("Unable to find any tenant by {publicId}", tenantId.ToString());
-                return NotFound();
-            }
-
-            var application = tenant.Applications.FirstOrDefault(a => a.PublicId == applicationId);
+            var application = await _appDbContext.Applications.FirstOrDefaultAsync(a => a.PublicId == applicationId, cancellationToken);
 
             if (application == null)
             {
                 _logger.LogDebug(
-                    "Unable to find any application by {applicationPublicId} for {tenantId}", 
-                    applicationId.ToString(), 
-                    tenant.Id.ToString()
+                    "Unable to find any application by {applicationPublicId}", 
+                    applicationId.ToString()
                 );
                 return NotFound();
             }
             
-            var translation = new Translation()
+            var translationKey = new TranslationKey()
             {
                 PublicId = Guid.NewGuid(),
                 ApplicationId = application.Id,
                 Key = request.Key,
-                LanguageCode = request.LanguageCode,
-                Value = request.Value,
             };
-            _appDbContext.Translations.Add(translation);
+            _appDbContext.TranslationKeys.Add(translationKey);
+
+            var translationValues = request.Values.Select(tv => new TranslationValue
+            {
+                TranslationKey = translationKey,
+                LanguageCode = tv.LanguageCode,
+                Value = tv.Value
+            });
+            _appDbContext.TranslationValues.AddRange(translationValues);
+
             await _appDbContext.SaveChangesAsync(cancellationToken);
 
-            return Ok(new TranslationModel(translation));
+            return Ok(new TranslationKeyModel(translationKey));
         }
     }
 }

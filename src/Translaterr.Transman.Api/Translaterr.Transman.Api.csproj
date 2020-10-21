@@ -5,9 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Translaterr.Transman.Abstractions\Translaterr.Transman.Abstractions.csproj" />
       <ProjectReference Include="..\Translaterr.Transman.Domain\Translaterr.Transman.Domain.csproj" />
-      <ProjectReference Include="..\Translaterr.Transman.Services\Translaterr.Transman.Services.csproj" />
     </ItemGroup>
 
 

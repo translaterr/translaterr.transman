@@ -30,7 +30,7 @@ namespace Translaterr.Transman.Api.Tests.Controllers.TenantsControllerTests
             // Assert
             Assert.NotNull(tenant);
             Assert.Equal(tenantName, tenant.Name);
-            Assert.NotNull(tenant.PublicId);
+            Assert.NotEqual(Guid.Empty, tenant.PublicId);
             Assert.IsType<Guid>(tenant.PublicId);
         }
         

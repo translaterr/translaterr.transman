@@ -12,8 +12,4 @@
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.9" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Translaterr.Transman.Abstractions\Translaterr.Transman.Abstractions.csproj" />
-    </ItemGroup>
-
 </Project>
