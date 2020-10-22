@@ -13,13 +13,15 @@ namespace Translaterr.Transman.Domain.Services
     {
         private readonly ILogger<TranslationCacheManager> _logger;
         private readonly IDistributedCache _cache;
-        private readonly DistributedCacheEntryOptions _options;
+        private readonly DistributedCacheEntryOptions _options = new DistributedCacheEntryOptions
+        {
+            SlidingExpiration = TimeSpan.FromDays(7),
+        };
 
-        public TranslationCacheManager(ILogger<TranslationCacheManager> logger, IDistributedCache cache, DistributedCacheEntryOptions options)
+        public TranslationCacheManager(ILogger<TranslationCacheManager> logger, IDistributedCache cache)
         {
             _logger = logger;
             _cache = cache;
-            _options = options;
         }
 
         public async Task<bool> SaveTranslationsToCache(Guid applicationId, string languageCode, IDictionary<string, string> translations, CancellationToken cancellationToken)
