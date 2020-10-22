@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translaterr.Transman.Domain
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translaterr.Transman.Api.Tests", "test\Translaterr.Transman.Api.Tests\Translaterr.Transman.Api.Tests.csproj", "{ABD42E4F-27EC-4864-9EBB-EC3C209E6012}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translaterr.Transman.Abstractions", "src\Translaterr.Transman.Abstractions\Translaterr.Transman.Abstractions.csproj", "{60D7F4EB-43C9-45CB-A536-605B4F84391E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translaterr.Transman.Domain.Tests", "test\Translaterr.Transman.Domain.Tests\Translaterr.Transman.Domain.Tests.csproj", "{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,8 @@ Global
 		{1A26ECAF-2078-4A6A-9CD1-9445DBA74573} = {FB09D69A-56B0-4943-93A9-920B00BA2615}
 		{44698635-DEFE-4FC6-9126-E082F0F343EB} = {FB09D69A-56B0-4943-93A9-920B00BA2615}
 		{ABD42E4F-27EC-4864-9EBB-EC3C209E6012} = {E27B2946-357F-4328-B567-28F20723DD6E}
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E} = {FB09D69A-56B0-4943-93A9-920B00BA2615}
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC} = {E27B2946-357F-4328-B567-28F20723DD6E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1A26ECAF-2078-4A6A-9CD1-9445DBA74573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -67,5 +73,29 @@ Global
 		{ABD42E4F-27EC-4864-9EBB-EC3C209E6012}.Release|x64.Build.0 = Release|Any CPU
 		{ABD42E4F-27EC-4864-9EBB-EC3C209E6012}.Release|x86.ActiveCfg = Release|Any CPU
 		{ABD42E4F-27EC-4864-9EBB-EC3C209E6012}.Release|x86.Build.0 = Release|Any CPU
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E}.Debug|x64.Build.0 = Debug|Any CPU
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E}.Debug|x86.Build.0 = Debug|Any CPU
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E}.Release|x64.ActiveCfg = Release|Any CPU
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E}.Release|x64.Build.0 = Release|Any CPU
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E}.Release|x86.ActiveCfg = Release|Any CPU
+		{60D7F4EB-43C9-45CB-A536-605B4F84391E}.Release|x86.Build.0 = Release|Any CPU
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}.Debug|x64.Build.0 = Debug|Any CPU
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}.Debug|x86.Build.0 = Debug|Any CPU
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}.Release|x64.ActiveCfg = Release|Any CPU
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}.Release|x64.Build.0 = Release|Any CPU
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}.Release|x86.ActiveCfg = Release|Any CPU
+		{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

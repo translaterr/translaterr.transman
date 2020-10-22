@@ -79,5 +79,81 @@ namespace Translaterr.Transman.Api.Controllers
 
             return Ok(new TranslationKeyModel(translationKey));
         }
+
+        [HttpPut("{translationId}")]
+        public async Task<IActionResult> Update(Guid applicationId, Guid translationId, TranslationsUpdateRequest request, CancellationToken cancellationToken)
+        {
+            var application = await _appDbContext
+                .Applications
+                .Include(a => a.TranslationKeys)
+                .ThenInclude(tk => tk.TranslationValues)
+                .FirstOrDefaultAsync(a => a.PublicId == applicationId, cancellationToken);
+
+            if (application == null)
+            {
+                _logger.LogDebug(
+                    "Unable to find any application by {applicationPublicId}", 
+                    applicationId.ToString()
+                );
+                return NotFound();
+            }
+
+            var translationKey = application.TranslationKeys.FirstOrDefault(tk => tk.PublicId == translationId);
+
+            if (translationKey == null)
+            {
+                _logger.LogDebug("Unable to find TranslationKey {translationKeyPublicId}", translationId.ToString());
+                return NotFound();
+            }
+            
+            _appDbContext.TranslationValues.RemoveRange(translationKey.TranslationValues);
+
+            var newTranslationValues = request.Values.Select(tv => new TranslationValue
+            {
+                TranslationKeyId = translationKey.Id,
+                LanguageCode = tv.LanguageCode,
+                Value = tv.Value
+            });
+            
+            _appDbContext.TranslationValues.AddRange(newTranslationValues);
+
+            await _appDbContext.SaveChangesAsync(cancellationToken);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{translationId}")]
+        public async Task<IActionResult> Delete(Guid applicationId, Guid translationId, CancellationToken cancellationToken)
+        {
+            var application = await _appDbContext
+                .Applications
+                .Include(a => a.TranslationKeys)
+                .ThenInclude(tk => tk.TranslationValues)
+                .FirstOrDefaultAsync(a => a.PublicId == applicationId, cancellationToken);
+            
+            if (application == null)
+            {
+                _logger.LogDebug(
+                    "Unable to find any application by {applicationPublicId}", 
+                    applicationId.ToString()
+                );
+                return NotFound();
+            }
+
+            var translation = application.TranslationKeys.FirstOrDefault(tk => tk.PublicId == translationId);
+
+            if (translation == null)
+            {
+                _logger.LogDebug("Unable to find TranslationKey {translationKeyPublicId}", translationId.ToString());
+                return NotFound();
+            }
+            
+            _appDbContext.TranslationValues.RemoveRange(translation.TranslationValues);
+            _appDbContext.TranslationKeys.Remove(translation);
+
+            await _appDbContext.SaveChangesAsync(cancellationToken);
+
+            return Ok();
+        }
     }
 }

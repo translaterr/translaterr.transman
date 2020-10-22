@@ -48,6 +48,9 @@ namespace Translaterr.Transman.Domain.Data
                 .WithOne(tv => tv.TranslationKey)
                 .HasForeignKey(tv => tv.TranslationKeyId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TranslationValue>()
+                .HasKey(tk => new {tk.TranslationKeyId, tk.LanguageCode});
         }
     }
 }
