@@ -105,9 +105,16 @@ namespace Translaterr.Transman.Domain.Services
             return true;
         }
 
-        public Task<bool> GetTranslations(Guid applicationPublicId, string languageCode, CancellationToken cancellationToken)
+        public async Task<IDictionary<string, string>> GetTranslations(Guid applicationPublicId, string languageCode, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var translationsFromCache = await _cacheManager.GetTranslationsFromCache(applicationPublicId, languageCode, cancellationToken);
+
+            if (translationsFromCache != null)
+            {
+                return translationsFromCache;
+            }
+
+            return await GenerateTranslationsForApplicationInLanguage(applicationPublicId, languageCode, cancellationToken);
         }
     }
 }

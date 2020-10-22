@@ -13,11 +13,13 @@ namespace Translaterr.Transman.Domain.Services
     {
         private readonly ILogger<TranslationCacheManager> _logger;
         private readonly IDistributedCache _cache;
+        private readonly DistributedCacheEntryOptions _options;
 
-        public TranslationCacheManager(ILogger<TranslationCacheManager> logger, IDistributedCache cache)
+        public TranslationCacheManager(ILogger<TranslationCacheManager> logger, IDistributedCache cache, DistributedCacheEntryOptions options)
         {
             _logger = logger;
             _cache = cache;
+            _options = options;
         }
 
         public async Task<bool> SaveTranslationsToCache(Guid applicationId, string languageCode, IDictionary<string, string> translations, CancellationToken cancellationToken)
@@ -40,7 +42,7 @@ namespace Translaterr.Transman.Domain.Services
 
             try
             {
-                await _cache.SetStringAsync(cacheKey, payload, cancellationToken);
+                await _cache.SetStringAsync(cacheKey, payload, _options, cancellationToken);
             }
             catch (Exception exception)
             {
@@ -59,7 +61,7 @@ namespace Translaterr.Transman.Domain.Services
 
             if (payload == null)
             {
-                _logger.LogWarning("Unable to find any value in cache for {applicationId} for {languageCode} with {cacheKey}", 
+                _logger.LogDebug("Unable to find any value in cache for {applicationId} for {languageCode} with {cacheKey}", 
                     applicationId.ToString(), languageCode, cacheKey);
                 return null;
             }
@@ -81,6 +83,6 @@ namespace Translaterr.Transman.Domain.Services
             return translations;
         }
 
-        private static string GetCacheKey(Guid applicationId, string languageCode) => $"{applicationId.ToString()}-{languageCode}";
+        private static string GetCacheKey(Guid applicationId, string languageCode) => $"translations-{applicationId.ToString()}-{languageCode}";
     }
 }

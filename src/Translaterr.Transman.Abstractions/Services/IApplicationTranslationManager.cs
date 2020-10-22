@@ -9,6 +9,6 @@ namespace Translaterr.Transman.Abstractions.Services
     {
         public Task<bool> GenerateTranslationsForApplicationAndSaveToCache(Guid applicationPublicId, CancellationToken cancellationToken);
         public Task<IDictionary<string, string>> GenerateTranslationsForApplicationInLanguage(Guid applicationPublicId, string languageCode, CancellationToken cancellationToken);
-        public Task<bool> GetTranslations(Guid applicationPublicId, string languageCode, CancellationToken cancellationToken);
+        public Task<IDictionary<string, string>> GetTranslations(Guid applicationPublicId, string languageCode, CancellationToken cancellationToken);
     }
 }
