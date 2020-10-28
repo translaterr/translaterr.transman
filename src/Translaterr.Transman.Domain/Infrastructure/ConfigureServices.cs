@@ -14,7 +14,7 @@ namespace Translaterr.Transman.Domain.Infrastructure
             // DataContexts
             serviceCollection.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("Application"));
+                options.UseSqlServer(configuration.GetConnectionString("ApplicationDb"));
             });
 
             serviceCollection.AddStackExchangeRedisCache(options =>
@@ -25,6 +25,12 @@ namespace Translaterr.Transman.Domain.Infrastructure
             // Services
             serviceCollection.AddScoped<ITranslationCacheManager, TranslationCacheManager>();
             serviceCollection.AddScoped<IApplicationTranslationManager, ApplicationTranslationManager>();
+            
+            // Health checks
+            serviceCollection
+                .AddHealthChecks()
+                .AddSqlServer(configuration.GetConnectionString("ApplicationDb"), name: "Database", tags: new []{"Database"})
+                .AddRedis(configuration.GetConnectionString("Cache"), "Cache", tags: new []{"Database"});
             
             return serviceCollection;
         }
