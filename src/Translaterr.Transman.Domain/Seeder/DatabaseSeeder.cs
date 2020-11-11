@@ -1,4 +1,6 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Data.Common;
+using Bogus;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Translaterr.Transman.Abstractions.Factories;
@@ -35,11 +37,12 @@ namespace Translaterr.Transman.Domain.Seeder
             if (_seederConfiguration.Enabled is false)
             {
                 _logger.LogInformation("Seeder disabled, skipping seeding the database");
-                return;
+                return; 
             }
-            
+
             _logger.LogInformation("Database seeder is enabled");
             _logger.LogInformation("Using database seed of {seed}", _seederConfiguration.Seed.ToString());
+            Randomizer.Seed = new Random(_seederConfiguration.Seed);
             
             _logger.LogInformation("Starting to generate random data");
 
