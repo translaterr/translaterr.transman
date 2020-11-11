@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS restore
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS restore
 WORKDIR /app
 
 COPY Translaterr.Transman.sln .
@@ -15,7 +15,7 @@ RUN ["dotnet", "test", "--no-restore", "--no-build"]
 FROM build as publish
 RUN ["dotnet", "publish", "--no-restore", "-c", "Release", "-o", "out", "./src/Translaterr.Transman.Api/Translaterr.Transman.Api.csproj"]
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 as runtime
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 as runtime
 COPY --from=publish /app/out .
 
 EXPOSE 80

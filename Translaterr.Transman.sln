@@ -5,17 +5,17 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FB09D69A-56B0-4943-93A9-920B00BA2615}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E27B2946-357F-4328-B567-28F20723DD6E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E27B2946-357F-4328-B567-28F20723DD6E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translaterr.Transman.Api", "src\Translaterr.Transman.Api\Translaterr.Transman.Api.csproj", "{1A26ECAF-2078-4A6A-9CD1-9445DBA74573}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translaterr.Transman.Domain", "src\Translaterr.Transman.Domain\Translaterr.Transman.Domain.csproj", "{44698635-DEFE-4FC6-9126-E082F0F343EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translaterr.Transman.Api.Tests", "test\Translaterr.Transman.Api.Tests\Translaterr.Transman.Api.Tests.csproj", "{ABD42E4F-27EC-4864-9EBB-EC3C209E6012}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translaterr.Transman.Api.Tests", "tests\Translaterr.Transman.Api.Tests\Translaterr.Transman.Api.Tests.csproj", "{ABD42E4F-27EC-4864-9EBB-EC3C209E6012}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translaterr.Transman.Abstractions", "src\Translaterr.Transman.Abstractions\Translaterr.Transman.Abstractions.csproj", "{60D7F4EB-43C9-45CB-A536-605B4F84391E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translaterr.Transman.Domain.Tests", "test\Translaterr.Transman.Domain.Tests\Translaterr.Transman.Domain.Tests.csproj", "{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translaterr.Transman.Domain.Tests", "tests\Translaterr.Transman.Domain.Tests\Translaterr.Transman.Domain.Tests.csproj", "{5B885ED0-014A-4ABB-B709-5D09FB4CCBDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
