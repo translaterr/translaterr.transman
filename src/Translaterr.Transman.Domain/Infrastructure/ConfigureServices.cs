@@ -25,7 +25,11 @@ namespace Translaterr.Transman.Domain.Infrastructure
             // DataContexts
             serviceCollection.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("ApplicationDb"));
+                options.UseSqlServer(
+                    configuration.GetConnectionString("ApplicationDb"), 
+                    b => b
+                        .UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery)
+                );
             });
 
             serviceCollection.AddStackExchangeRedisCache(options =>
