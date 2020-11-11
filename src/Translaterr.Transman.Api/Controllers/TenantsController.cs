@@ -27,7 +27,10 @@ namespace Translaterr.Transman.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var tenants = await _appDbContext.Tenants.ToListAsync(cancellationToken);
+            var tenants = await _appDbContext
+                .Tenants
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
 
             return Ok(tenants.Select(tenant => new TenantModel(tenant)).ToList());
         }

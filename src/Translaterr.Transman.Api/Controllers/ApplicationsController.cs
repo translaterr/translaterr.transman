@@ -29,6 +29,7 @@ namespace Translaterr.Transman.Api.Controllers
         {
             var tenant = await _appDbContext.Tenants
                 .Include(t => t.Applications)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(t => t.PublicId == tenantId, cancellationToken);
 
             if (tenant == null)

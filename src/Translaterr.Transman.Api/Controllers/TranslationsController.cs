@@ -30,7 +30,8 @@ namespace Translaterr.Transman.Api.Controllers
             var application = await _appDbContext
                 .Applications
                 .Include(a => a.TranslationKeys)
-                .ThenInclude(tk => tk.TranslationValues)
+                    .ThenInclude(tk => tk.TranslationValues)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.PublicId == applicationId, cancellationToken);
 
             if (application == null)
