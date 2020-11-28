@@ -2,14 +2,15 @@ version: '3'
 
 services:
   
-  sqldb:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+  mongodb:
+    image: mongo:latest
     ports:
-      - 1433:1433
+      - 27017:27017
+      - 27018:27018
+      - 27019:27019
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=Tr4nsl4t3rr
-      - MSSQL_PID=Express
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: translaterr
 
   redis:
     image: redis:latest

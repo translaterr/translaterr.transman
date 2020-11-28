@@ -4,13 +4,13 @@ using Translaterr.Transman.Api.Controllers;
 
 namespace Translaterr.Transman.Api.Tests.Controllers.LanguagesControllerTests
 {
-    public abstract class BaseLanguagesControllerTests : BaseControllerTests
+    public abstract class BaseLanguagesControllerTests
     {
         protected LanguagesController LanguagesController;
 
         protected ILogger<LanguagesController> Logger;
 
-        public BaseLanguagesControllerTests(string testsName) : base(testsName)
+        public BaseLanguagesControllerTests()
         {
             Logger = A.Fake<ILogger<LanguagesController>>();
             

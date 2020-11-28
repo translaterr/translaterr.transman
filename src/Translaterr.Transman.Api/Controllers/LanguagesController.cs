@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace Translaterr.Transman.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public ActionResult<List<LanguageModel>> Index()
         {
             _logger.LogDebug("Retrieving a all supported languages");
             return Ok(CultureInfo

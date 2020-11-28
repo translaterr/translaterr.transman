@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using Translaterr.Transman.Domain.Types;
+using Translaterr.Transman.Abstractions.Types;
 
 namespace Translaterr.Transman.Api.Models
 {
@@ -11,10 +11,18 @@ namespace Translaterr.Transman.Api.Models
         [JsonPropertyName("value")]
         public string Value { get; set; }
 
-        public TranslationValueModel(TranslationValue translationValue)
+        public TranslationValueModel() {}
+        
+        public TranslationValueModel(ITranslationValue translationValueModel)
         {
-            LanguageCode = translationValue.LanguageCode;
-            Value = translationValue.Value;
+            LanguageCode = translationValueModel.LanguageCode;
+            Value = translationValueModel.Value;
         }
+        
+        public ITranslationValue ToDomain() => new TranslationValue()
+        {
+            LanguageCode = LanguageCode,
+            Value = Value,
+        };
     }
 }

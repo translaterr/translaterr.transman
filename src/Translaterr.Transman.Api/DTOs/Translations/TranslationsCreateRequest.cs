@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using Translaterr.Transman.Api.DTOs.Translations.Support;
+using Translaterr.Transman.Api.Models;
 
 namespace Translaterr.Transman.Api.DTOs.Translations
 {
@@ -13,9 +13,8 @@ namespace Translaterr.Transman.Api.DTOs.Translations
         [MinLength(1)]
         public string Key { get; set; }
         
-        [JsonPropertyName("values")]
+        [JsonPropertyName("translations")]
         [Required]
-        [MinLength(1)]
-        public IList<TranslationValueDto> Values { get; set; }
+        public IList<TranslationValueModel> Translations { get; set; }
     }
 }

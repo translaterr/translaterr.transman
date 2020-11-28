@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Translaterr.Transman.Abstractions.Services;
-using Translaterr.Transman.Domain.Data;
 
 namespace Translaterr.Transman.Domain.Services
 {
+    /*
     public class ApplicationTranslationManager : IApplicationTranslationManager
     {
         private readonly ILogger<ApplicationTranslationManager> _logger;
-        private readonly AppDbContext _appDbContext;
+        private readonly TranslationsDbContext _translationsDbContext;
         private readonly ITranslationCacheManager _cacheManager;
 
-        public ApplicationTranslationManager(ILogger<ApplicationTranslationManager> logger, AppDbContext appDbContext, ITranslationCacheManager cacheManager)
+        
+        public ApplicationTranslationManager(ILogger<ApplicationTranslationManager> logger, TranslationsDbContext translationsDbContext, ITranslationCacheManager cacheManager)
         {
             _logger = logger;
-            _appDbContext = appDbContext;
+            _translationsDbContext = translationsDbContext;
             _cacheManager = cacheManager;
         }
 
@@ -117,4 +117,5 @@ namespace Translaterr.Transman.Domain.Services
             return await GenerateTranslationsForApplicationInLanguage(applicationPublicId, languageCode, cancellationToken);
         }
     }
+    */
 }

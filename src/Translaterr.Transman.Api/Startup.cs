@@ -6,10 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Translaterr.Transman.Abstractions.Migrator;
-using Translaterr.Transman.Abstractions.Seeder;
 using Translaterr.Transman.Domain.Infrastructure;
-using Translaterr.Transman.Domain.Seeder;
 
 namespace Translaterr.Transman.Api
 {
@@ -24,29 +21,21 @@ namespace Translaterr.Transman.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOptions();
-            
-            services.AddDataServices(Configuration);
-            
+            services.AddDomainServices(Configuration);
             services.AddControllers();
-            
             services.AddSwaggerGen();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDatabaseSeeder databaseSeeder, IMigrator migrator)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            migrator.HandleMigrations();
-            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                databaseSeeder.SeedDatabase();
             }
 
             app.UseHttpsRedirection();
             
             app.UseSwagger();
-
             app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = String.Empty;
@@ -57,14 +46,14 @@ namespace Translaterr.Transman.Api
 
             app.UseAuthorization();
 
+            app.UseHealthChecks("/health", new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHealthChecks("/health", new HealthCheckOptions()
-                {
-                    Predicate = _ => true,
-                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                });
-                
                 endpoints.MapControllers();
             });
         }
