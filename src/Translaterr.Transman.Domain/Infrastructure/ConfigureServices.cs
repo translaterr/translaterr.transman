@@ -12,21 +12,9 @@ namespace Translaterr.Transman.Domain.Infrastructure
         {
             // DataContexts
             serviceCollection.AddDataServices(configuration);
-
-            serviceCollection.AddStackExchangeRedisCache(options =>
-            {
-                options.InstanceName = "Translaterr_Transman_";
-                options.Configuration = configuration.GetConnectionString("Cache");
-            });
             
             // Services
             serviceCollection.AddScoped<ITranslationsService, TranslationsService>();
-            serviceCollection.AddScoped<ITranslationCacheManager, TranslationCacheManager>();
-            
-            // Health checks
-            serviceCollection
-                .AddHealthChecks()
-                .AddRedis(configuration.GetConnectionString("Cache"), "Cache", tags: new []{"Database"});
 
             return serviceCollection;
         }
