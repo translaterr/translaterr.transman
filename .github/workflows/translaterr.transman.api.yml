@@ -11,35 +11,25 @@ on:
 
 env:
   DOCKERFILE: transman.api.dockerfile
-  REPOSITORY: translaterr
-  IMAGE_NAME: transman.api
+  IMAGE_NAME: translaterr/transman.api
 
 jobs:
-  build_and_test:
-    name: "Build and test"
+  transman_api:
+    name: "Translaterr.Transman.Api"
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
     
-    - name: Build
-      run: docker build . --file $DOCKERFILE --target build --tag runtime:${{ github.sha }}
+    - name: Build solution
+      run: docker build . --file $DOCKERFILE --target build --tag $IMAGE_NAME:${{ github.sha }}
     
-    - name: Tests
-      run: docker build . --file $DOCKERFILE --target test --tag runtime:${{ github.sha }}
-  
-  publish:
-    name: "Publish to Dockerhub"
-    runs-on: ubuntu-latest
-    needs: build_and_test
+    - name: Test solution
+      run: docker build . --file $DOCKERFILE --target test --tag $IMAGE_NAME:${{ github.sha }}
     
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Build Runtime
-      run: docker build . --file $DOCKERFILE --target runtime --tag runtime:${{ github.sha }}
+    - name: Publish solution
+      run: docker build . --file $DOCKERFILE --target runtime --tag $IMAGE_NAME:${{ github.sha }}
     
     - name: Dockerhub Login
       uses: docker/login-action@v1.6.0
@@ -47,16 +37,12 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-    - name: Tag Image
-      run: docker tag runtime:${{ github.sha }} ${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+    - name: Push image to dockerhub
+      run: docker push $IMAGE_NAME:${{ github.sha }}
     
-    - name: Push Image
-      run: docker push ${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-        
     - name: Tag latest Image
-      if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-      run: docker tag ${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} ${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:latest
-        
+      if: github.ref == 'refs/heads/main'
+      run: docker tag $IMAGE_NAME:${{ github.sha }} $IMAGE_NAME:latest
+
     - name: Push latest Image
-      if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-      run: docker push ${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:latest
+      run: docker push $IMAGE_NAME:latest
